@@ -2,8 +2,6 @@
 
 ![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/tmux/Image/Ik46pbb.png)
 
-![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/tmux/Image/GYktm26.png)
-
 **Source:** Created by  DarkStar7471
 
 ***Description:***
@@ -65,51 +63,54 @@
 
 12) Whew! Plenty of output to work with now! If you work with a relatively small terminal like me, this output might not all fit on screen at once. To fix that, let's enter 'copy mode'. What key do we add to the combo to enter copy mode?
 
-   **[**
+    **[**
 
 13)  Copy mode is very similar to 'less' and allows up to scroll up and down using the arrow keys. What if we want to go up to the very top?
 
-   **g**
+      **g**
 
 14) How about the bottom?
 
-   **G**
+     **G**
 
 15) What key do we press to exit 'copy mode'?
 
-   **q**
+     **q**
 
 16) This window we're working in is nice and all but I think we need an upgrade. What key do we add to the combo to split the window vertically?
 
-   **%**
+     **%**
 
 17) How about horizontally?
 
-    **"**
+      **"**
 
 18) We can now move between these panes using the key combo and arrow keys, try it out!
 
-   **No answer needed**
+     **No answer needed**
 
 19) We can also resize these panes by holding down the key combo and pressing the arrow keys, try it out now! 
 
-   **No answer needed**
+     **No answer needed**
 
 20) Wait a minute, we've forgotten about our original window! We can go back it using the key combo and the number of the session! Try going back to this original window and then returning to our new one!
 
-   **No answer needed**
+     **No answer needed**
 
 21) Say one of these newly minted panes becomes unresponsive or we're just done working in it, what key do we add to the combo to 'kill' the pane?
 
-   **X**
+     **X**
 
 22) Now that's we've finished out work, what can we type to close the session?
 
-    **exit**
+      **exit**
 
 23) Last but now least, how do we spawn a named tmux session named 'neat'?
 
-    **tmux new -s neat**
+      **tmux new -s neat**
+   
+   
+![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/tmux/Image/GYktm26.png)   
 
 
 
