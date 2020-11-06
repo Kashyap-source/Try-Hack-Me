@@ -54,12 +54,12 @@
 
 10) Seems like we have plenty of windows and nothing to fill them up with. Let's remedy that problem by deploying the VM above and running and nmap scan against it. Deploy the VM now.
 
-   **No answer needed**
+     **No answer needed**
 
 11) Run the following scan against the VM:
 
-   **command**
-       - nmap -sV -vv -sC <BOX_IP>
+     **command**
+          - nmap -sV -vv -sC <BOX_IP>
 
 12) Whew! Plenty of output to work with now! If you work with a relatively small terminal like me, this output might not all fit on screen at once. To fix that, let's enter 'copy mode'. What key do we add to the combo to enter copy mode?
 
