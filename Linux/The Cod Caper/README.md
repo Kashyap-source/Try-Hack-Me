@@ -25,8 +25,7 @@
 
 **Nmap**
      
-     -kali@kali:~$ nmap -vv -sC -sV 10.10.85.135
-     
+    -kali@kali:~$ nmap -vv -sC -sV 10.10.85.135 
      Scanning 10.10.85.135 [1000 ports]
      Discovered open port 80/tcp on 10.10.85.135
      Discovered open port 22/tcp on 10.10.85.135
@@ -175,7 +174,7 @@
 
 **PHP reverse shell & netcat** 
  
-![alt text]()
+![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/The%20Cod%20Caper/Image/Screenshot%202020-11-09%2013_30_06.png)
 
 -A useful PHP reverse shell:
        
