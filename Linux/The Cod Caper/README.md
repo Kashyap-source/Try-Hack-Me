@@ -1,6 +1,6 @@
 # The Cod Caper
 
-![alt text]()
+![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/The%20Cod%20Caper/Image/gq8tre5.png)
 
 **Source:** Created by Paradox
 
