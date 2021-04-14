@@ -43,8 +43,12 @@ This is designed as almost a sandbox environment to follow along with the teachi
  
  ***Task 2: Accessing the Network***
  
- 
- 
+ ***Controlling the Network:***
+
+The network has three states: Running, Stopped, and Resetting.
+
+The current state can be shown at the top right of the network box at the top of the page:
+![alt text](https://assets.tryhackme.com/additional/wreath-network/fe129fa984de.png)
  
  
  
