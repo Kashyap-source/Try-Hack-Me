@@ -2,4 +2,4 @@
 
 ![alt text](https://assets.tryhackme.com/room-banners/wreath_banner.png)
 
-**Source:** ![alt text](https://tryhackme.com/p/MuirlandOracle)
+**Source:** (https://tryhackme.com/p/MuirlandOracle)
