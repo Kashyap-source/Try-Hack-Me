@@ -13,6 +13,7 @@
   - Link: https://tryhackme.com/room/wreath
  
 - **Task 1: Introduction**
+   ![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/pic.png)
 
   Wreath is designed as a learning resource for beginners with a primary focus on:
 
