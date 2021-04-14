@@ -109,6 +109,7 @@
    Okay, we know what we're dealing with.
    Open the IP in your browser -- what site does the server try to redirect you to?
      - https://thomaswreath.thm
+   
    You will have noticed that the site failed to resolve. Looks like Thomas forgot to set up the DNS!
 
    Add it to your hosts file manually. This can be accomplished by editing the /etc/hosts file on Linux/MacOS, or C:\Windows\System32\drivers\etc\hosts on Windows, to include t    the IP address, followed by a tab, then the domain name. Note: this must be done as root/Administrator.
@@ -134,7 +135,8 @@
   It appears that this service is vulnerable to an unauthenticated remote code execution exploit!
 
   What is the CVE number for this exploit?
-    - CVE-2019-15107
+    
+   - CVE-2019-15107
 
 
 
