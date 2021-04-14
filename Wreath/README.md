@@ -12,8 +12,9 @@
 - *TryHackMe.com*
   - Link: https://tryhackme.com/room/wreath
  
- **Task 1: Introduction**
- 
+- **Task 1: Introduction**
+ ![alt text](https://tryhackme-images.s3.amazonaws.com/room-icons/ffa81460a5c1487dd7bb43d0ca0735a1.png)
+
 Wreath is designed as a learning resource for beginners with a primary focus on:
 
 - Pivoting
@@ -41,7 +42,7 @@ This is designed as almost a sandbox environment to follow along with the teachi
  This network is designed for beginners, but assumes basic competence in the Linux command line and fundamental hacking methodology. The ability to read and write a little code will also be useful. Any other required knowledge will be linked throughout the tasks.
  
  
- ***Task 2: Accessing the Network***
+- ***Task 2: Accessing the Network***
  
  ***Controlling the Network:***
 
@@ -49,9 +50,14 @@ The network has three states: Running, Stopped, and Resetting.
 
 The current state can be shown at the top right of the network box at the top of the page:
 ![alt text](https://assets.tryhackme.com/additional/wreath-network/fe129fa984de.png)
+
+- Running means that the network is fully operational and can be connected to at will
+- Stopped indicates that the network has gone to sleep. This happens when no one has pressed the "Extend" button within a set time limit so as to prevent the network from being   constantly running with no one using it. It can be restarted by pressing the "Start" button. This does not reset the network back to a clean copy, so anything stored on the     targets should still be there
+- Resetting indicates that the network is currently in the process of being wiped clean and resetting back to its default state. This can be used when something (or someone) has   happened to one of the targets rendering it broken
+
+The three buttons below the network map can be used to control this functionality:
  
- 
- 
+![alt text](https://assets.tryhackme.com/additional/wreath-network/fbf6ced6514d.png)
  
  
  
