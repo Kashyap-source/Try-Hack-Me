@@ -13,7 +13,6 @@
   - Link: https://tryhackme.com/room/wreath
  
 - **Task 1: Introduction**
- ![alt text](https://tryhackme-images.s3.amazonaws.com/room-icons/ffa81460a5c1487dd7bb43d0ca0735a1.png)
 
 Wreath is designed as a learning resource for beginners with a primary focus on:
 
@@ -58,9 +57,21 @@ The current state can be shown at the top right of the network box at the top of
 The three buttons below the network map can be used to control this functionality:
  
 ![alt text](https://assets.tryhackme.com/additional/wreath-network/fbf6ced6514d.png)
- 
- 
- 
- 
+
+- The "Start" button restarts the network once stopped
+- The "Extend" button prevents the network from going to sleep. This button also contains a timer showing how long until the network shuts down
+- The "Reset" button initiates a full wipe of the network. This requires a percentage of users in the network to click the button, thus preventing a single person from spamming   resets 
+
+- ***Task 3  Intro Backstory:***
+
+Out of the blue, an old friend from university: Thomas Wreath, calls you after several years of no contact. You spend a few minutes catching up before he reveals the real reason he called:
+
+"So I heard you got into hacking? That's awesome! I have a few servers set up on my home network for my projects, I was wondering if you might like to assess them?"
+
+You take a moment to think about it, before deciding to accept the job -- it's for a friend after all.
+
+Turning down his offer of payment, you tell him:
+
+- ***Task 4  Intro Brief:***
  
  
