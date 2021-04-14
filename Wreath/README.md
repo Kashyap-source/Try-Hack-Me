@@ -74,6 +74,7 @@
    Turning down his offer of payment, you tell him:
 
 - ***Task 4  Intro Brief:***
+    
     Thomas has sent over the following information about the network:
 
     There are two machines on my home network that host projects and stuff I'm working on in my own time -- one of them has a webserver that's port forwarded, so that's your way     in if you can find a vulnerability! It's serving a website that's pushed to my git server from my own PC for version control, then cloned to the public facing server. See if     you can get into these! My own PC is also on that network, but I doubt you'll be able to get into that as it has protections turned on, doesn't run anything vulnerable, and     can't be accessed by the public-facing section of the network. Well, I say PC -- it's technically a repurposed server because I had a spare license lying around, but same       difference.
@@ -92,7 +93,11 @@
      - sudo apt update && sudo apt upgrade
 
 
-
+***Task 5  Webserver Enumeration:***
+   
+    As with any attack, we first begin with the enumeration phase. Completing the Nmap room (if you haven't already) will help with this section.
+    Thomas gave us an IP to work with (shown on the Network Panel at the top of the page). Let's start by performing a port scan on the first 15000 ports of this IP.
+    Note: Here (and in general), it's a good idea to save your scan results to a file so you don't have to re-run the same scan twice.
 
 
 
