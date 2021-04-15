@@ -356,11 +356,17 @@
          [root@prod-serv tmp]#
 
 
+***Task 7  Pivoting What is Pivoting?:***
 
+   Pivoting is the art of using access obtained over one machine to exploit another machine deeper in the network. It is one of the most essential aspects of network penetration    testing, and is one of the three main teaching points for this room.
 
+   Put simply, by using one of the techniques described in the following tasks (or others!), it becomes possible for an attacker to gain initial access to a remote network, and    use it to access other machines in the network that would not otherwise be accessible:
 
+   ![alt text](https://assets.tryhackme.com/additional/wreath-network/6904b85a9b93.png)
 
+   In this diagram, there are four machines on the target network: one public facing server, with three machines which are not exposed to the internet. By accessing the public     server, we can then pivot to attack the remaining three targets.
 
+   Note: This is an example diagram and is not representative of the Wreath Network.
 
 
 
