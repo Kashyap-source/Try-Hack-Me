@@ -488,9 +488,13 @@
   Specifically, we are interested in the "ProxyList" section:
 
   [ProxyList]
+  
   #add proxy here ...
+  
   #meanwhile
+  
   #defaults set to "tor"
+  
   socks4  127.0.0.1 9050
  
   It is here that we can choose which port(s) to forward the connection through. By default there is one proxy set to localhost port 9050 -- this is the default port for a Tor     entrypoint, should you choose to run one on your attacking machine. That said, it is not hugely useful to us. This should be changed to whichever (arbitrary) port is being       used for the proxies we'll be setting up in the following tasks.
