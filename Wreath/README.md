@@ -488,9 +488,9 @@
   Specifically, we are interested in the "ProxyList" section:
 
   [ProxyList]
-  # add proxy here ...
-  # meanwhile
-  # defaults set to "tor"
+  #add proxy here ...
+  #meanwhile
+  #defaults set to "tor"
   socks4  127.0.0.1 9050
  
   It is here that we can choose which port(s) to forward the connection through. By default there is one proxy set to localhost port 9050 -- this is the default port for a Tor     entrypoint, should you choose to run one on your attacking machine. That said, it is not hugely useful to us. This should be changed to whichever (arbitrary) port is being       used for the proxies we'll be setting up in the following tasks.
@@ -498,7 +498,11 @@
   There is one other line in the Proxychains configuration that is worth paying attention to, specifically related to the Proxy DNS settings:
 
   ![alt text](https://assets.tryhackme.com/additional/wreath-network/3af17f6ddafc.png)
+  
+  If performing an Nmap scan through proxychains, this option can cause the scan to hang and ultimately crash. Comment out the proxy_dns line using a hashtag (#) at the start of   the line before performing a scan through the proxy!
 
+  ![alt text](https://assets.tryhackme.com/additional/wreath-network/557437aec525.png)
+  
   Other things to note when scanning through proxychains:
 
   You can only use TCP scans -- so no UDP or SYN scans. ICMP Echo packest (Ping requests) will also not work through the proxy, so use the  -Pn  switch to prevent Nmap from       trying it.
