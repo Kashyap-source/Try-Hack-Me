@@ -580,7 +580,7 @@
 
    3) On a new line, type the following line, then paste in the public key:
          
-       - command="echo 'This account can only be used for port forwarding'",no-agent-forwarding,no-x11-forwarding,no-pty
+          - command="echo 'This account can only be used for port forwarding'",no-agent-forwarding,no-x11-forwarding,no-pty
    
    This makes sure that the key can only be used for port forwarding, disallowing the ability to gain a shell on your attacking machine.
    
