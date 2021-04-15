@@ -572,13 +572,13 @@
 
    Reverse connections are very possible with the SSH client (and indeed may be preferable if you have a shell on the compromised server, but not SSH access). They are, however,    riskier as you inherently must access your attacking machine from the target -- be it by using credentials, or preferably a key based system. Before we can make a reverse        connection safely, there are a few steps we need to take:
 
-   1)First, generate a new set of SSH keys and store them somewhere safe (ssh-keygen):
+   1) First, generate a new set of SSH keys and store them somewhere safe (ssh-keygen):
 
    his will create two new files: a private key, and a public key.
 
-   2)Copy the contents of the public key (the file ending with .pub), then edit the ~/.ssh/authorized_keys file on your own attacking machine. You may need to create the ~/.ssh      directory and authorized_keys file first.
+   2) Copy the contents of the public key (the file ending with .pub), then edit the ~/.ssh/authorized_keys file on your own attacking machine. You may need to create the ~/.ssh       directory and authorized_keys file first.
 
-   3)On a new line, type the following line, then paste in the public key:
+   3) On a new line, type the following line, then paste in the public key:
          
        - command="echo 'This account can only be used for port forwarding'",no-agent-forwarding,no-x11-forwarding,no-pty
    
