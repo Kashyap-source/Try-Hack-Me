@@ -12,7 +12,7 @@
 - *TryHackMe.com*
   - Link: https://tryhackme.com/room/wreath
  
-- **Task 1: Introduction**
+- **[Task 1]: Introduction**
    ![alt text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/pic.png)
 
   Wreath is designed as a learning resource for beginners with a primary focus on:
@@ -42,7 +42,7 @@
      This network is designed for beginners, but assumes basic competence in the Linux command line and fundamental hacking methodology. The ability to read and write a little      code will also be useful. Any other required knowledge will be linked throughout the tasks.
  
  
-- ***Task 2: Accessing the Network***
+- ***[Task 2]: Accessing the Network***
  
     ***Controlling the Network:***
 
@@ -63,7 +63,7 @@
     - The "Extend" button prevents the network from going to sleep. This button also contains a timer showing how long until the network shuts down
     - The "Reset" button initiates a full wipe of the network. This requires a percentage of users in the network to click the button, thus preventing a single person from             spamming resets 
 
-- ***Task 3  Intro Backstory:***
+- ***[Task 3]: Intro Backstory***
 
    Out of the blue, an old friend from university: Thomas Wreath, calls you after several years of no contact. You spend a few minutes catching up before he reveals the real        reason he called:
 
@@ -73,7 +73,7 @@
 
    Turning down his offer of payment, you tell him:
 
-- ***Task 4  Intro Brief:***
+- ***[Task 4]: Intro Brief***
     
     Thomas has sent over the following information about the network:
 
@@ -93,7 +93,7 @@
      - sudo apt update && sudo apt upgrade
 
 
-***Task 5  Webserver Enumeration:***
+***[Task 5]: Webserver Enumeration***
    
    As with any attack, we first begin with the enumeration phase. Completing the Nmap room (if you haven't already) will help with this section.
    Thomas gave us an IP to work with (shown on the Network Panel at the top of the page). Let's start by performing a port scan on the first 15000 ports of this IP.
@@ -208,7 +208,7 @@
 
   
   
-***Task 6  Webserver Exploitation:***
+***[Task 6]: Webserver Exploitation***
       
    In the previous task we found a vulnerable service[1][2] running on the target which will give us the ability to execute commands on the target.
 
@@ -356,7 +356,8 @@
          [root@prod-serv tmp]#
 
 
-***Task 7  Pivoting What is Pivoting?:***
+
+***[Task 7]: Pivoting What is Pivoting?***
 
    Pivoting is the art of using access obtained over one machine to exploit another machine deeper in the network. It is one of the most essential aspects of network penetration    testing, and is one of the three main teaching points for this room.
 
@@ -369,8 +370,34 @@
    Note: This is an example diagram and is not representative of the Wreath Network.
 
 
+***[Task 8]: Pivoting High-level Overview***
 
+   The methods we use to pivot tend to vary between the different target operating systems. Frameworks like Metasploit can make the process easier, however, for the time being,    we'll be looking at more manual techniques for pivoting.
 
+   There are two main methods encompassed in this area of pentesting:
+
+   Tunnelling/Proxying: Creating a proxy type connection through a compromised machine in order to route all desired traffic into the targeted network. This could potentially      also be tunnelled inside another protocol (e.g. SSH tunnelling), which can be useful for evading a basic Intrusion Detection System (IDS) or firewall
+   Port Forwarding: Creating a connection between a local port and a single port on a target, via a compromised host
+   A proxy is good if we want to redirect lots of different kinds of traffic into our target network -- for example, with an nmap scan, or to access multiple ports on multiple      different machines.
+
+   Port Forwarding tends to be faster and more reliable, but only allows us to access a single port (or a small range) on a target device.
+
+  Which style of pivoting is more suitable will depend entirely on the layout of the network, so we'll have to start with further enumeration before we decide how to proceed. It   would be sensible at this point to also start to draw up a layout of the network as you see it -- although in the case of this practice network, the layout is given in the box   at the top of the screen.
+
+  As a general rule, if you have multiple possible entry-points, try to use a Linux/Unix target where possible, as these tend to be easier to pivot from. An outward facing Linux   webserver is absolutely ideal.
+
+  The remaining tasks in this section will cover the following topics:
+
+  Enumerating a network using native and statically compiled tools
+  - Proxychains / FoxyProxy
+  - SSH port forwarding and tunnelling (primarily Unix)
+  - plink.exe (Windows)
+  - socat (Windows and Unix)
+  - chisel (Windows and Unix)
+  - sshuttle (currently Unix only)
+  This is far from an exhaustive list of the tools available for pivoting, so further research is encouraged.
+
+  Research: Not covered in this Network, but good to know about. Which Metasploit Framework Meterpreter command can be used to create a port forward?
 
 
 
