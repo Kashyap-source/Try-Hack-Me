@@ -624,7 +624,7 @@
    ![image](https://user-images.githubusercontent.com/68686150/114845755-a5434980-9df9-11eb-8473-6cc3a9dbb179.png)
 
 
-
+****[Task 12]: Pivoting plink.exe****
 
 
 
