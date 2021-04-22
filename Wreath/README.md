@@ -990,7 +990,27 @@
   ![image](https://user-images.githubusercontent.com/68686150/115669731-37050680-a366-11eb-97a8-aed4086960b2.png)
 
 
+***[Task 18] Git Server Pivoting***
 
+   Thinking about the interesting service on the next target that we discovered in the previous task, pick a pivoting technique and use it to connect to this service, using the    web browser on your attacking machine! 
+
+   As a word of advice: sshuttle is highly recommended for creating an initial access point into the rest of the network. This is because the firewall on the CentOS target will    prove problematic with some of the techniques shown here. We will learn how to mitigate against this later in the room, although if you're comfortable opening up a port        using FirewallD then port forwarding or a proxy would also work.
+
+  ![image](https://user-images.githubusercontent.com/68686150/115670216-cb6f6900-a366-11eb-96df-aaa2d8fc8027.png)
+  
+  ![image](https://user-images.githubusercontent.com/68686150/115670293-e0e49300-a366-11eb-9d45-9800dd37112a.png)
+ 
+  Head to the login screen of this application. This can be done by adding the answer to the previous question on at the end of the url, e.g. if using sshuttle:
+   
+      http://IP/ANSWER
+  
+  ![image](https://user-images.githubusercontent.com/68686150/115670490-18ebd600-a367-11eb-8fc9-1f6ca96969f3.png)
+
+  When navigating to this URI, we are given the following login page:
+  
+  ![image](https://user-images.githubusercontent.com/68686150/115670419-05406f80-a367-11eb-9fbf-8d1f099c2730.png)
+
+  ![image](https://user-images.githubusercontent.com/68686150/115670532-25702e80-a367-11eb-9feb-122d9830a9af.png)
 
 
 
