@@ -1094,7 +1094,7 @@
 
    We first turn on our Burp proxy (see the Burpsuite room if you need help with this!) and navigate to the exploit URL:
 
-   [!alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_1.png)
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_1.png)
 
 
 
