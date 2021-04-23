@@ -1042,7 +1042,7 @@
  
    We are, however, interested in the last 6 lines of the exploit:
  
-  "https://assets.tryhackme.com/additional/wreath-network/0c95035c81e7.png"
+   ![alt text](https://assets.tryhackme.com/additional/wreath-network/0c95035c81e7.png)
 
 
 
